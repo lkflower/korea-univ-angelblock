@@ -1,0 +1,169 @@
+<!doctype html>
+<html>
+<head>
+<title>Angel Block</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, user-scalable=no">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<link rel="stylesheet" href="resources/css/owl.carousel.min.css">
+<link rel="stylesheet" href="resources/css/common.css">
+<link rel="stylesheet" href="resources/css/site.css">
+<script src="resources/js/jquery-1.8.3.min.js"></script>
+<script src="resources/js/owl.carousel.min.js"></script>
+<script src="resources/js/design.js" defer="defer"></script>
+<script type="text/javascript" src="./lib/bignumber.min.js"></script>
+<script type="text/javascript" src="./lib/web3-light.js"></script>
+
+</head>
+
+<body>
+<script>
+	
+	var Web3 = require('web3');
+	var web3 = new Web3();
+	web3.setProvider(new web3.providers.HttpProvider("http://localhost:8545"));
+	
+$(document).ready(function(){
+	$("#send").click(function() {
+		$("#promptContents").html($("#desc").val());
+		$("#commonPrompt").show();
+
+
+	});
+	
+	$("#promptOk").click(function() {
+		location.href="_vote_create_complete.html?title=" + $("#desc").val();
+
+	});
+
+	
+});
+</script>
+		
+<form autocomplete="off">
+	<!-- wrap -->
+	<div id="wrap" class="bg_gray">
+		<!-- header -->
+		<div class="header">
+			<div class="tit_area">
+				<h1>Angel Block - 스타트업</h1>
+			</div>
+		</div>
+		<!-- //header -->
+
+		<!-- content -->
+		<div id="ct">
+			<!-- container -->
+			<div class="container">
+				<div class="step on open">
+					<h2 class="step_head"><i class=""></i> 투표생성</h2>
+					<div class="step_body">
+						<fieldset class="form_type">
+							<ul>
+								<li>
+									<label class="label">투표내용</label>
+									<input type="text" name="desc" id="desc" placeholder="투표내용을 입력하세요.">
+								</li>
+								<li>
+									<label class="label">패스워드</label>
+									<input type="password" name="cnum" id="cnum" placeholder="패스워드 입력">
+								</li>
+					
+							</ul>
+						</fieldset>
+						<p class="mt2r"><button type="button" id="send" class="btn on">확인</button></p>
+					</div>
+				</div>
+			</div>
+			<!-- //container -->
+		</div>
+		<!-- //content -->
+	</div>
+	<!-- //wrap -->
+
+	<div class="ly_pop ly_select1">
+		<div class="bg"></div>
+		<div id="ly_select1" class="cont">
+			<div class="ele">
+				<ul class="btn_list">
+					<li><button type="button" class="btn on">계정1</button></li>
+					<li><button type="button" class="btn">계정2</button></li>
+					<li><button type="button" class="btn">계정3</button></li>
+					<li><button type="button" class="btn">계정4</button></li>
+					<li><button type="button" class="btn">계정5</button></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+
+	<div class="ly_pop ly_select2">
+		<div class="bg"></div>
+		<div id="ly_select2" class="cont">
+			<div class="ele">
+				<ul class="btn_list">
+					<li><button type="button" class="btn on">동의</button></li>
+					<li><button type="button" class="btn">일부동의 75%</button></li>
+					<li><button type="button" class="btn">일부동의 50%</button></li>
+					<li><button type="button" class="btn">일부동의 25%</button></li>
+					<li><button type="button" class="btn">미동의</button></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</form>
+
+<!-- 로딩 레이어 -->
+<div id="" class="ly_pop ly_loading">
+	<div class="bg"></div>
+	<div id="ly_loading" class="cont">
+		<div class="ele">
+			<div class="pop_body">
+				<div class="loading">
+					<div class="loading_bar"></div>
+					<div class="loading_bar"></div>
+					<div class="loading_bar"></div>
+					<div class="loading_bar"></div>
+				</div>
+				<span class="text">로딩 중</span>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- //로딩 레이어 -->
+
+<!-- Alert Format -->
+<div id="commonAlert" class="ly_pop ly_alert">
+	<div class="bg"></div>
+	<div id="ly_alert" class="cont">
+		<div class="ele">
+			<div class="pop_body">
+				<h2 id="alertTitle"></h2>
+				<p id="alertContents"></p>
+			</div>
+			<div class="pop_footer">
+				<button type="button" onclick="layer_close();" class="btn on">확인</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- //Alert Format -->
+
+<!-- Prompt Format -->
+<div id="commonPrompt" class="ly_pop ly_prompt">
+	<div class="bg"></div>
+	<div id="ly_prompt" class="cont">
+		<div class="ele">
+			<div class="pop_body">
+				<h2 id="promptTitle">아래 내용으로 투표를 생성하시겠습니까?</h2>
+				<p id="promptContents"></p>
+			</div>
+			<div class="pop_footer btn_type2">
+				<button type="button" onclick="layer_close();" class="btn">취소</button>
+				<button type="button" id="promptOk" class="btn on">확인</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- //Prompt Format -->
+</body>
+</html>

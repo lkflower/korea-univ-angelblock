@@ -1,0 +1,148 @@
+<!doctype html>
+<html>
+<head>
+<title>Angle Block</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, user-scalable=no">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<link rel="stylesheet" href="resources/css/owl.carousel.min.css">
+<link rel="stylesheet" href="resources/css/common.css">
+<link rel="stylesheet" href="resources/css/site.css">
+<script src="resources/js/jquery-1.8.3.min.js"></script>
+<script src="resources/js/owl.carousel.min.js"></script>
+<script src="resources/js/design.js" defer="defer"></script>
+</head>
+
+<body>
+<script>
+$(document).ready(function(){ 
+	$("#send").click(function(){
+		$("#promptContents").html($("#title").val() + "<br>" + $("#amount").val());
+		$("#commonPrompt").show();
+	});
+
+	$("#title, #amount, #pwd").change(function() {
+		if ($("#title").val().length > 0 && $("#amount").val().length > 0 && $("#pwd").val().length > 0) {
+			$("#send").addClass("on");
+		} else {
+			$("#send").removeClass("on");
+		}
+	});
+
+	$("#promptOk").click(function() {
+		location.href="_allocation_complete.html";
+	});
+});
+</script>
+
+<form autocomplete="off">
+	<!-- wrap -->
+	<div id="wrap">
+		<!-- header -->
+		<div class="header">
+			<div class="tit_area">
+				<h1>Angel Block - 배당 토큰 지급</h1>
+			</div>
+		</div>
+		<!-- //header -->
+
+		<!-- content -->
+		<div id="ct" class="acct_occupy">
+			<!-- container -->
+			<div class="container">
+				<!-- top infomation -->
+				<div class="headline">
+					<p>입력하신 토큰이 투자자들에게 입금됩니다.<br>
+						배당 토큰 <span class="text_primary">총액을</span> 입력하여 주세요.</p>
+				</div>
+				<!-- //top infomation -->
+
+				<!-- 거래내역 예시 
+				-->
+					<div class="panel">
+						<div class="panel_head">배당 토큰</div>
+					<div class="panel_body">
+						<div class="left">
+							<p class="tit">배당내용</p>
+							<p class="desc">
+								<input type="text" id="title" placeholder="예 : 19' 2분기 실적 배분"></input>
+							</p>
+						</div>
+					</div>
+				</div>
+				<div class="form_type">
+					<label class="label">배당토큰 (단위 : wei)</label>
+					<input type="tel"  id="amount" placeholder="배당 총 금액 입력">
+					<br>
+					<label class="label">패스워드</label>
+					<input type="password"  id="pwd" placeholder="패스워드를 입력해주세요.">
+				</div>
+			</div>
+			<!-- //container -->
+
+			<!-- fixed bottom button -->
+			<div class="fix_btm_btn">
+				<button type="button" id="send" class="btn btn_lg">확인</button>
+			</div>
+			<!-- //fixed bottom button -->
+		</div>
+		<!-- //content -->
+	</div>
+	<!-- //wrap -->
+</form>
+
+<!-- 로딩 레이어 -->
+<div id="" class="ly_pop ly_loading">
+	<div class="bg"></div>
+	<div id="ly_loading" class="cont">
+		<div class="ele">
+			<div class="pop_body">
+				<div class="loading">
+					<div class="loading_bar"></div>
+					<div class="loading_bar"></div>
+					<div class="loading_bar"></div>
+					<div class="loading_bar"></div>
+				</div>
+				<span class="text">로딩 중</span>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- //로딩 레이어 -->
+
+<!-- Alert Format -->
+<div id="commonAlert" class="ly_pop ly_alert">
+	<div class="bg"></div>
+	<div id="ly_alert" class="cont">
+		<div class="ele">
+			<div class="pop_body">
+				<h2 id="alertTitle"></h2>
+				<p id="alertContents"></p>
+			</div>
+			<div class="pop_footer">
+				<button type="button" onclick="layer_close();" class="btn on">확인</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- //Alert Format -->
+
+<!-- Prompt Format -->
+<div id="commonPrompt" class="ly_pop ly_prompt">
+	<div class="bg"></div>
+	<div id="ly_prompt" class="cont">
+		<div class="ele">
+			<div class="pop_body">
+				<h2 id="promptTitle">배당금액을 확인하세요. 배당입금 처리하시겠습니까?</h2>
+				<p id="promptContents"></p>
+			</div>
+			<div class="pop_footer btn_type2">
+				<button type="button" onclick="layer_close();" class="btn">취소</button>
+				<button type="button" id="promptOk" class="btn on">확인</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- //Prompt Format -->
+</body>
+</html>

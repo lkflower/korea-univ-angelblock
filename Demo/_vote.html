@@ -1,0 +1,228 @@
+<!doctype html>
+<html>
+<head>
+<title>Angel Block</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, user-scalable=no">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<link rel="stylesheet" href="resources/css/owl.carousel.min.css">
+<link rel="stylesheet" href="resources/css/common.css">
+<link rel="stylesheet" href="resources/css/site.css">
+<script src="resources/js/jquery-1.8.3.min.js"></script>
+<script src="resources/js/owl.carousel.min.js"></script>
+<script src="resources/js/design.js" defer="defer"></script>
+<script type="text/javascript" src="./lib/bignumber.min.js"></script>
+<script type="text/javascript" src="./lib/web3-light.js"></script>
+
+</head>
+
+<body>
+<script>
+var Web3 = require('web3');
+var web3 = new Web3();
+web3.setProvider(new web3.providers.HttpProvider("http://localhost:8545"));
+
+var vc = web3.eth.contract([ { "constant": true, "inputs": [], "name": "getVoteInfo", "outputs": [ { "name": "", "type": "string", "value": "1차 마일스톤 평가" }, { "name": "", "type": "uint256", "value": "1560056539" }, { "name": "", "type": "uint256", "value": "3" }, { "name": "", "type": "uint256", "value": "0" }, { "name": "", "type": "uint256", "value": "0" }, { "name": "", "type": "uint256", "value": "100" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [ { "name": "opinion", "type": "bool" } ], "name": "vote", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "isComplete", "outputs": [ { "name": "", "type": "bool", "value": false } ], "payable": false, "stateMutability": "view", "type": "function" }, { "inputs": [ { "name": "title", "type": "string", "index": 0, "typeShort": "string", "bits": "", "displayName": "title", "template": "elements_input_string", "value": "1차 마일스톤 평가" }, { "name": "due", "type": "uint256", "index": 1, "typeShort": "uint", "bits": "256", "displayName": "due", "template": "elements_input_uint", "value": "3" } ], "payable": false, "stateMutability": "nonpayable", "type": "constructor" } ])
+				.at("0x2a2C45405401d5E524C48AD99e80EDfd34ACe4F1");	
+
+$(document).ready(function(){
+	$("#send").click(function() {
+		$("#promptContents").html($("#select1").text() + " : " + $("#select2").text());
+		$("#commonPrompt").show();
+	});
+	
+	$("#promptOk").click(function() {
+		//location.href="_complete.html";
+		$("#commonPrompt").hide();
+		$("#loading").show();
+		setTimeout(function(){
+			vote();
+		}, 1000);
+		//vote();
+	});
+
+	var list = web3.eth.accounts;
+
+	var total = 0;
+
+	for(var i = 0; i<list.length; i++){
+		var tempB= parseFloat(web3.fromWei(web3.eth.getBalance(list[i]),"ether"));
+		if (list[i] == "0xA5bf50b2ED15fcC85862c50658C66E6Deef44544".toLowerCase() 
+		  || list[i] == "0x06fCa62Ab491D9bcaF91F7a6797Ee0210f6fe5A2".toLowerCase()
+		  || list[i] == "0x0bBeC3991ccc0f749F01b9DeD546cF29f46Cb83c".toLowerCase()   ) {
+			/*
+스타트업:0x6e9b7d6Feac40102563318D1De418cf1f731A8CB
+투자자1:0xA5bf50b2ED15fcC85862c50658C66E6Deef44544
+투자자2:0x06fCa62Ab491D9bcaF91F7a6797Ee0210f6fe5A2
+투자자3:0x0bBeC3991ccc0f749F01b9DeD546cF29f46Cb83c
+			*/
+			$("#accounts").append('<li><button type="button" class="btn ">' + list[i] + '</button></li>');
+		}
+	}
+
+});
+
+function vote() {
+	var account = $("#select1").text();
+	var pwd = $("#pwd").val();
+	var select2 = $("#select2").text();
+	var opinion;
+	if (select2 == "동의") {
+		opinion = true;
+	} else {
+		opinion = false;
+	}
+		
+	web3.eth.defaultAccount = account;
+	console.log(account + ":" + pwd + ":" + opinion);
+	if(web3.personal.unlockAccount(account,pwd)){
+		vc.vote(opinion, function(err,result){
+			console.log(err + ":" + result); 
+			if(!err) {
+				//alert("트랜잭션이 성공적으로 전송되었습니다.|n"+result);
+				location.href = "_complete.html?acct=" + account;
+			}
+		});		
+	}
+	
+	$("#loading").hide();
+}
+
+</script>
+		
+<form autocomplete="off">
+	<!-- wrap -->
+	<div id="wrap" class="bg_gray">
+		<!-- header -->
+		<div class="header">
+			<div class="tit_area">
+				<h1>Angel Block - 투자자</h1>
+			</div>
+		</div>
+		<!-- //header -->
+
+		<!-- content -->
+		<div id="ct">
+			<!-- container -->
+			<div class="container">
+				<div class="step on open">
+					<h2 class="step_head"><i class="num"></i> 투표입력</h2>
+					<div class="step_body">
+						<fieldset class="form_type">
+							<ul>
+								<li>
+									<label class="label">계정</label>
+									<span class="input"><button type="button" id="select1" class="select select_pop"> - </button></span>
+								</li>
+								<li>
+									<label class="label">투표의견</label>
+									<span class="input"><button type="button" id="select2" class="select select_pop"> - </button></span>
+								</li>
+								<li>
+										<label class="label">패스워드</label>
+										<input type="password" name="pwd" id="pwd" placeholder="패스워드 입력">
+								</li>
+					
+							</ul>
+						</fieldset>
+						<p class="mt2r"><button type="button" id="send" class="btn on">확인</button></p>
+					</div>
+				</div>
+			</div>
+			<!-- //container -->
+		</div>
+		<!-- //content -->
+	</div>
+	<!-- //wrap -->
+
+	<div class="ly_pop ly_select1">
+		<div class="bg"></div>
+		<div id="ly_select1" class="cont">
+			<div class="ele">
+				<ul class="btn_list" id="accounts">
+					<!--
+						
+						<li><button type="button" class="btn on">계정1</button></li>
+						<li><button type="button" class="btn">계정2</button></li>
+						<li><button type="button" class="btn">계정3</button></li>
+						<li><button type="button" class="btn">계정4</button></li>
+						<li><button type="button" class="btn">계정5</button></li>
+					-->
+				</ul>
+			</div>
+		</div>
+	</div>
+
+	<div class="ly_pop ly_select2">
+		<div class="bg"></div>
+		<div id="ly_select2" class="cont">
+			<div class="ele">
+				<ul class="btn_list">
+					<li><button type="button" class="btn on">동의</button></li>
+					<!--	
+						<li><button type="button" class="btn">일부동의 75%</button></li>
+						<li><button type="button" class="btn">일부동의 50%</button></li>
+						<li><button type="button" class="btn">일부동의 25%</button></li>
+					-->
+					<li><button type="button" class="btn">미동의</button></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</form>
+
+<!-- 로딩 레이어 -->
+<div id="loading" class="ly_pop ly_loading">
+	<div class="bg"></div>
+	<div id="ly_loading" class="cont">
+		<div class="ele">
+			<div class="pop_body">
+				<div class="loading">
+					<div class="loading_bar"></div>
+					<div class="loading_bar"></div>
+					<div class="loading_bar"></div>
+					<div class="loading_bar"></div>
+				</div>
+				<span class="text">투표 처리 중</span>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- //로딩 레이어 -->
+
+<!-- Alert Format -->
+<div id="commonAlert" class="ly_pop ly_alert">
+	<div class="bg"></div>
+	<div id="ly_alert" class="cont">
+		<div class="ele">
+			<div class="pop_body">
+				<h2 id="alertTitle"></h2>
+				<p id="alertContents"></p>
+			</div>
+			<div class="pop_footer">
+				<button type="button" onclick="layer_close();" class="btn on">확인</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- //Alert Format -->
+
+<!-- Prompt Format -->
+<div id="commonPrompt" class="ly_pop ly_prompt">
+	<div class="bg"></div>
+	<div id="ly_prompt" class="cont">
+		<div class="ele">
+			<div class="pop_body">
+				<h2 id="promptTitle">아래 내용으로 투표를 진행하시겠습니까?</h2>
+				<p id="promptContents"></p>
+			</div>
+			<div class="pop_footer btn_type2">
+				<button type="button" onclick="layer_close();" class="btn">취소</button>
+				<button type="button" id="promptOk" class="btn on">확인</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- //Prompt Format -->
+</body>
+</html>

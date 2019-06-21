@@ -1,0 +1,81 @@
+<!doctype html>
+<html>
+<head>
+<title>Angel Block</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, user-scalable=no">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<link rel="stylesheet" href="resources/css/owl.carousel.min.css">
+<link rel="stylesheet" href="resources/css/common.css">
+<link rel="stylesheet" href="resources/css/site.css">
+<script src="resources/js/jquery-1.8.3.min.js"></script>
+<script src="resources/js/owl.carousel.min.js"></script>
+<script src="resources/js/design.js" defer="defer"></script>
+</head>
+
+<body>
+<script>
+$(document).ready(function(){
+	//슬라이드
+	$(".intro_slide").owlCarousel({
+		items: 1,
+		smartSpeed: 500
+	});
+
+	$("#send").click(function() {
+		location.href="_index.html";
+	});
+});
+</script>
+
+<!-- wrap -->
+<div id="wrap">
+	<!-- content -->
+	<div id="ct" class="intro intro1">
+		<!-- slide -->
+		<div class="intro_slide owl-carousel">
+			<div class="item item1">
+				<div class="box">
+					<h1>안전하고 쉬운 엔젤투자!</h1>
+					<h2 class="text_primary">안심하고 해보세요</h2>
+					<ul class="content type_img">
+						<li>엔젤투자 지원</li>
+						<li>스타트업 지원</li>
+						<li>안전한 엔젤투자</li>
+					</ul>
+				</div>
+			</div>
+			<div class="item item2">
+				<div class="box">
+					<h1>블록체인 엔젤투자 플랫폼</h1>
+					<h2 class="text_primary">스타트업에게 최적의 지원플랫폼</h2>
+					<p class="content type_img"><img src="resources/images/intro/phone_cashreceipt.png" alt="스타트업은 사업에만 신경쓰세요."></p>
+				</div>
+			</div>
+			<div class="item item3">
+				<div class="box">
+					<h1>안심하고 투자해보세요</h1>
+					<h2 class="text_primary">엔젤투자 지금 시작해보세요.</h2>
+					<ul class="content type_img">
+						<!--
+							
+							<li><img src="resources/images/intro/title2.png" alt="어떻게"></li>
+						-->
+						<li><img src="resources/images/intro/start.png" alt="준비해"></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<!-- //slide -->
+
+		<!-- fixed bottom button -->
+		<div class="fix_btm_btn">
+			<button type="button" id="send" class="btn btn_lg on">시작하기</button>
+		</div>
+		<!-- //fixed bottom button -->
+	</div>
+	<!-- //content -->
+</div>
+<!-- //wrap -->
+</body>
+</html>
